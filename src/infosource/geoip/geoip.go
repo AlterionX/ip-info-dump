@@ -36,5 +36,4 @@ func basicGeoIP2() {
 	// Coordinates: 51.5142, -0.0931
 }
 
-type geoip struct {}
-
+type geoip struct{}

@@ -11,6 +11,22 @@ terraform {
 
 # Setting up basic information...
 
+variable environment {
+  type = string
+}
+
+variable geoipkey {
+  type = string
+}
+
+variable whoiskey {
+  type = string
+}
+
+variable virustotalkey {
+  type = string
+}
+
 variable region {
   type = string
   default = "us-east-1"
@@ -61,9 +77,9 @@ resource "aws_lambda_function" "ip_info_dump_lambda" {
 
   environment {
     variables = {
-      GEOIP_APIKEY      = "insertkeyhere"
-      WHOIS_APIKEY      = "insertkeyhere"
-      VIRUSTOTAL_APIKEY = "insertkeyhere"
+      GEOIP_APIKEY      = var.geoipkey
+      WHOIS_APIKEY      = var.whoiskey
+      VIRUSTOTAL_APIKEY = var.virustotalkey
     }
   }
 }

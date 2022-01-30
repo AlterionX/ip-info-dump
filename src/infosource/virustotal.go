@@ -36,5 +36,4 @@ func basicVT() {
 	fmt.Printf("File %s was submitted for the last time on %v\n", file.ID(), ls)
 }
 
-type virustotal struct {}
-
+type virustotal struct{}

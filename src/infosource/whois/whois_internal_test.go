@@ -4,11 +4,11 @@ import (
 	"net"
 	"testing"
 
-    "github.com/AlterionX/ip-info-dump/infosource/base"
+	"github.com/AlterionX/ip-info-dump/infosource/base"
 
-	"github.com/stretchr/testify/assert"
-	"github.com/prashantv/gostub"
 	parser "github.com/likexian/whois-parser"
+	"github.com/prashantv/gostub"
+	"github.com/stretchr/testify/assert"
 )
 
 func Test_WhoIs_FetchInfo_mock(t *testing.T) {
@@ -33,17 +33,17 @@ func Test_WhoIs_FetchInfo_mock(t *testing.T) {
 
 	parserStub := gostub.Stub(&baseParserCall, func(raw string) (parser.WhoisInfo, error) {
 		if raw == "good" {
-			return parser.WhoisInfo {
-				Domain: &parser.Domain {
+			return parser.WhoisInfo{
+				Domain: &parser.Domain{
 					Domain: "good",
 				},
 			}, nil
 		}
 		if raw == "bad" {
-			return parser.WhoisInfo {}, base.SourceFailure
+			return parser.WhoisInfo{}, base.SourceFailure
 		}
-		return parser.WhoisInfo {
-			Domain: &parser.Domain {
+		return parser.WhoisInfo{
+			Domain: &parser.Domain{
 				Domain: "gobblygook",
 			},
 		}, nil
@@ -72,4 +72,3 @@ func Test_WhoIs_FetchInfo_mock(t *testing.T) {
 		assert.ErrorIs(t, info.Err, base.BadArgument, "the correct error to be forwarded")
 	}
 }
-

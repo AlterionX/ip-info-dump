@@ -17,7 +17,7 @@ func Test_WhoIs_FetchInfo_real(t *testing.T) {
 	google_ip := net.IPv4(142, 250, 217, 78)
 	result_channel := source.FetchInfo(google_ip)
 
-	info, ok := <- result_channel
+	info, ok := <-result_channel
 	assert.True(t, ok, "channel to be fine")
 	assert.Nil(t, info.Err, "request for google's whois to have worked")
 
@@ -29,4 +29,3 @@ func Test_WhoIs_Name(t *testing.T) {
 	source := WhoIs{}
 	assert.Equal(t, source.Name(), "whois", "name to match json conventions")
 }
-

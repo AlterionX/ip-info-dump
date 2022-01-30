@@ -1,20 +1,20 @@
 package base
 
 import (
-    "net"
-    "errors"
+	"errors"
+	"net"
 )
 
 type InfoResult struct {
-    Info interface{}
-    Err error
+	Info interface{}
+	Err  error
 }
 
 type InfoSource interface {
-    // FetchInfo must close the returned channel if no messages will be sent through the channel.
-    // If not, the system will hang forever.
-    FetchInfo(arg net.IP) <-chan InfoResult
-    Name() string
+	// FetchInfo must close the returned channel if no messages will be sent through the channel.
+	// If not, the system will hang forever.
+	FetchInfo(arg net.IP) <-chan InfoResult
+	Name() string
 }
 
 var BadArgument = errors.New("Requested IP/domain is malformed.")
