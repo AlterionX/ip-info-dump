@@ -7,7 +7,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/AlterionX/ip-info-dump/well"
+	errorTypes "github.com/AlterionX/ip-info-dump/infosource/base"
+	"github.com/AlterionX/ip-info-dump/infosource"
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 )
@@ -34,7 +35,7 @@ func RunIPLookup(ctx context.Context, req events.APIGatewayProxyRequest) (events
     if err == nil {
         log.Printf("Running GetInfo resulted in the following data: %v", data)
     } else {
-        if errors.Is(err, infosource.BadArgument) {
+        if errors.Is(err, errorTypes.BadArgument) {
             log.Printf("Attempting to look up domain/IP %q failed due to %q.", req.Body, err.Error());
             return clientErrorResponse(http.StatusBadRequest), nil
         } else {
