@@ -14,4 +14,3 @@ func Test_responses(t *testing.T) {
 	server := serverErrorResponse()
 	assert.Equal(t, http.StatusInternalServerError, server.StatusCode, "client response to be fine")
 }
-

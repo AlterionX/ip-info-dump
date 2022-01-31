@@ -10,8 +10,8 @@ import (
 )
 
 func Test_runIPLookup_success(t *testing.T) {
-	req := events.APIGatewayProxyRequest {}
-	req.QueryStringParameters = map[string]string {
+	req := events.APIGatewayProxyRequest{}
+	req.QueryStringParameters = map[string]string{
 		"q": "example.com",
 	}
 
@@ -22,8 +22,8 @@ func Test_runIPLookup_success(t *testing.T) {
 }
 
 func Test_runIPLookup_badArgs(t *testing.T) {
-	req := events.APIGatewayProxyRequest {}
-	req.QueryStringParameters = map[string]string {
+	req := events.APIGatewayProxyRequest{}
+	req.QueryStringParameters = map[string]string{
 		"q": "thisisnotawebsite",
 	}
 
@@ -32,4 +32,3 @@ func Test_runIPLookup_badArgs(t *testing.T) {
 	assert.Equal(t, http.StatusBadRequest, response.StatusCode, "response to not be okay")
 	assert.NotEmpty(t, response.Body, "some data to be returned")
 }
-
