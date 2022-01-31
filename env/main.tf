@@ -15,10 +15,6 @@ variable environment {
   type = string
 }
 
-variable geoipkey {
-  type = string
-}
-
 variable virustotalkey {
   type = string
 }
@@ -73,8 +69,7 @@ resource "aws_lambda_function" "ip_info_dump_lambda" {
 
   environment {
     variables = {
-      IPDUMP_GEOIP_KEY  = var.geoipkey
-      VIRUSTOTAL_APIKEY = var.virustotalkey
+      IPDUMP_VT_KEY = var.virustotalkey
     }
   }
 }
