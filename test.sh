@@ -3,6 +3,6 @@
 set -euxo pipefail
 
 # Load environment variables
-source ./env/localenv.sh;
+source ./env/local.env.sh;
 cd src;
 go test ./... -cover;

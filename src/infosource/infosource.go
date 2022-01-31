@@ -8,6 +8,7 @@ import (
 	"github.com/AlterionX/ip-info-dump/infosource/query"
 	"github.com/AlterionX/ip-info-dump/infosource/whois"
 	"github.com/AlterionX/ip-info-dump/infosource/geoip"
+	"github.com/AlterionX/ip-info-dump/infosource/virustotal"
 )
 
 func GetAllSources() []base.InfoSource {
@@ -16,6 +17,7 @@ func GetAllSources() []base.InfoSource {
 		query.QueryInfo {},
 		whois.WhoIs{},
 		geoip.GeoIP{},
+		virustotal.VirusTotal{},
 	}
 }
 

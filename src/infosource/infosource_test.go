@@ -12,7 +12,7 @@ import (
 func Test_GetAllSources(t *testing.T) {
 	sources := GetAllSources()
 
-	assert.Equal(t, len(sources), 3, "there should be three supported sources.")
+	assert.Equal(t, len(sources), 4, "there should be three supported sources.")
 
 	// This has no failure paths.
 }
@@ -52,14 +52,14 @@ func Test_GetInfo_real_domain(t *testing.T) {
 	info, err := GetInfo("google.com", GetAllSources())
 
 	assert.Nil(t, err, "invalid sources to silently fail and domain to be correct")
-	assert.Len(t, info, 3, "three responses")
+	assert.Len(t, info, 4, "four responses")
 }
 
 func Test_GetInfo_real_ip(t *testing.T) {
 	info, err := GetInfo("8.8.8.8", GetAllSources())
 
 	assert.Nil(t, err, "invalid sources to silently fail and domain to be correct")
-	assert.Len(t, info, 3, "three responses")
+	assert.Len(t, info, 4, "four responses")
 }
 
 func Test_GetInfo_real_badInput(t *testing.T) {
