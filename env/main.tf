@@ -19,10 +19,6 @@ variable geoipkey {
   type = string
 }
 
-variable whoiskey {
-  type = string
-}
-
 variable virustotalkey {
   type = string
 }
@@ -77,8 +73,7 @@ resource "aws_lambda_function" "ip_info_dump_lambda" {
 
   environment {
     variables = {
-      GEOIP_APIKEY      = var.geoipkey
-      WHOIS_APIKEY      = var.whoiskey
+      IPDUMP_GEOIP_KEY  = var.geoipkey
       VIRUSTOTAL_APIKEY = var.virustotalkey
     }
   }

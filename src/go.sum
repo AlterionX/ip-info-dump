@@ -1,4 +1,6 @@
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
+github.com/Shivam010/go-freeGeoIP v0.1.1 h1:C3429ZzKXlltMrpb/7OIgUb2uR8xkAVEIdcslyeLqkE=
+github.com/Shivam010/go-freeGeoIP v0.1.1/go.mod h1:wQ0uai0rKfE8rS97cPg9zUVPo4rwEfJcfU5Y8tvj49M=
 github.com/VirusTotal/vt-go v0.0.0-20211209151516-855a1e790678 h1:IVvLDz0INo1rn7wG4OQub9MkyNNaBp0sQgU1apho/mk=
 github.com/VirusTotal/vt-go v0.0.0-20211209151516-855a1e790678/go.mod h1:u1+HeRyl/gQs67eDgVEWNE7+x+zCyXhdtNVrRJR5YPE=
 github.com/aws/aws-lambda-go v1.28.0 h1:fZiik1PZqW2IyAN4rj+Y0UBaO1IDFlsNo9Zz/XnArK4=
@@ -18,6 +20,8 @@ github.com/oschwald/geoip2-golang v1.6.1 h1:GKxT3yaWWNXSb7vj6D7eoJBns+lGYgx08QO0
 github.com/oschwald/geoip2-golang v1.6.1/go.mod h1:xdvYt5xQzB8ORWFqPnqMwZpCpgNagttWdoZLlJQzg7s=
 github.com/oschwald/maxminddb-golang v1.8.0 h1:Uh/DSnGoxsyp/KYbY1AuP0tYEwfs0sCph9p/UMXK/Hk=
 github.com/oschwald/maxminddb-golang v1.8.0/go.mod h1:RXZtst0N6+FY/3qCNmZMBApR19cdQj43/NM9VkrNAis=
+github.com/patrickmn/go-cache v2.1.0+incompatible h1:HRMgzkcYKYpi3C8ajMPV8OFXaaRUnok+kx1WdO15EQc=
+github.com/patrickmn/go-cache v2.1.0+incompatible/go.mod h1:3Qf8kWWT7OJRJbdiICTKqZju1ZixQ/KpMGzzAfe6+WQ=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/prashantv/gostub v1.1.0 h1:BTyx3RfQjRHnUWaGF9oQos79AlQ5k8WNktv7VGvVH4g=

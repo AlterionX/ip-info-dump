@@ -3,6 +3,7 @@ module github.com/AlterionX/ip-info-dump
 go 1.17
 
 require (
+	github.com/Shivam010/go-freeGeoIP v0.1.1 // indirect
 	github.com/VirusTotal/vt-go v0.0.0-20211209151516-855a1e790678 // indirect
 	github.com/aws/aws-lambda-go v1.28.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
@@ -11,6 +12,7 @@ require (
 	github.com/likexian/whois-parser v1.22.0 // indirect
 	github.com/oschwald/geoip2-golang v1.6.1 // indirect
 	github.com/oschwald/maxminddb-golang v1.8.0 // indirect
+	github.com/patrickmn/go-cache v2.1.0+incompatible // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/prashantv/gostub v1.1.0 // indirect
 	github.com/stretchr/objx v0.1.0 // indirect

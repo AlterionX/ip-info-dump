@@ -11,23 +11,24 @@ import (
 
 func Test_fetchIP(t *testing.T) {
 	{
-		ip, err := fetchIP("::")
+		query, err := resolveQuery("::")
 		assert.Nil(t, err, "no error is expected")
-		assert.Equal(t, net.ParseIP("::"), ip, "ip is equivalent to manually parsing it")
+		assert.Equal(t, net.ParseIP("::"), query.IP, "ip is equivalent to manually parsing it")
 	}
 
 	{
-		ip, err := fetchIP("example.com")
+		query, err := resolveQuery("example.com")
 		assert.Nil(t, err, "no error is expected")
 		ips, err := net.LookupIP("example.com")
 		assert.Nil(t, err, "no error is expected")
-		assert.Contains(t, ips, ip, "ip returned is in the set of ips from lookup")
+		assert.Contains(t, ips, query.IP, "ip returned is in the set of ips from lookup")
+		assert.Equal(t, "example.com", query.Address, "ip returned is in the set of ips from lookup")
 	}
 
 	{
-		ip, err := fetchIP("thisisnotawebsite")
+		query, err := resolveQuery("thisisnotawebsite")
 		assert.ErrorIs(t, err, base.BadArgument, "the argument is invalide")
-		assert.Nil(t, ip, "no response when argument is invalid")
+		assert.Nil(t, query, "no response when argument is invalid")
 	}
 }
 

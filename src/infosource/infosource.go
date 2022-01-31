@@ -5,27 +5,47 @@ import (
 	"net"
 
 	"github.com/AlterionX/ip-info-dump/infosource/base"
+	"github.com/AlterionX/ip-info-dump/infosource/query"
 	"github.com/AlterionX/ip-info-dump/infosource/whois"
 )
 
 func GetAllSources() []base.InfoSource {
 	//return []InfoSource{whois {}, geoip {}, virustotal {}}
-	return []base.InfoSource{whois.WhoIs{}}
+	return []base.InfoSource{
+		query.QueryInfo {},
+		whois.WhoIs{},
+	}
 }
 
-func fetchIP(arg string) (net.IP, error) {
+func resolveQuery(arg string) (*base.Query, error) {
 	// TODO Is passing in localhost here a potential security risk?
+	var addr string
 	ip := net.ParseIP(arg)
 	if ip == nil {
+		addr = arg
 		// TODO Further research should be done to determine which ip address to use of if all of them should be used.
 		ips, err := net.LookupIP(arg)
 		if err != nil {
 			log.Printf("Looking for ip for %q failed.", arg)
 			return nil, base.BadArgument
 		}
+		log.Printf("Selecting first ip out of %q.", ips)
 		ip = ips[0]
+	} else {
+		addresses, err := net.LookupAddr(ip.String())
+		if err != nil || len(addresses) == 0 {
+			log.Printf("Looking for address matching %q failed.", ip.String())
+			return nil, base.BadArgument
+		}
+		log.Printf("Selecting first address out of %q.", addresses)
+		addr = addresses[0]
 	}
-	return ip, nil
+
+	query := base.Query {
+		IP: ip,
+		Address: addr,
+	}
+	return &query, nil
 }
 
 func checkSourceOutputChannel(name string, output <-chan base.InfoResult) (interface{}, error) {
@@ -51,14 +71,15 @@ func checkSourceOutputChannel(name string, output <-chan base.InfoResult) (inter
 //
 // Returns either the data gathered or one of the known errors in this package.
 func GetInfo(arg string, sources []base.InfoSource) (map[string]interface{}, error) {
-	ip, err := fetchIP(arg)
+	query_ptr, err := resolveQuery(arg)
 	if err != nil {
 		return nil, err
 	}
+	query := *query_ptr
 
 	outputs := make(map[string](<-chan base.InfoResult))
 	for _, source := range sources {
-		outputs[source.Name()] = source.FetchInfo(ip)
+		outputs[source.Name()] = source.FetchInfo(query)
 	}
 
 	data := make(map[string]interface{})

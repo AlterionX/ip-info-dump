@@ -12,7 +12,7 @@ import (
 func Test_GetAllSources(t *testing.T) {
 	sources := GetAllSources()
 
-	assert.Equal(t, len(sources), 1, "there should be three supported sources.")
+	assert.Equal(t, len(sources), 2, "there should be three supported sources.")
 
 	// This has no failure paths.
 }

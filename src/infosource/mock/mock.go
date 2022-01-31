@@ -2,10 +2,7 @@ package mock
 
 // TODO There was an attempt to make this a test only package, but the go compiler kept complaining about MockSource being not found, so it's now a build package.
 
-import (
-	"github.com/AlterionX/ip-info-dump/infosource/base"
-	"net"
-)
+import "github.com/AlterionX/ip-info-dump/infosource/base"
 
 type MockSource struct {
 	EarlyExit bool
@@ -14,7 +11,7 @@ type MockSource struct {
 	GivenName *string
 }
 
-func (source MockSource) FetchInfo(arg net.IP) <-chan base.InfoResult {
+func (source MockSource) FetchInfo(query base.Query) <-chan base.InfoResult {
 	info := make(chan base.InfoResult)
 	go func() {
 		if source.EarlyExit {
@@ -25,7 +22,7 @@ func (source MockSource) FetchInfo(arg net.IP) <-chan base.InfoResult {
 			info <- base.InfoResult{
 				Info: map[string]interface{}{
 					"static_value":  "mock_info",
-					"raw_ip:":       arg,
+					"raw_ip:":       query.IP,
 					"expected_info": source.Info,
 				},
 				Err: nil,

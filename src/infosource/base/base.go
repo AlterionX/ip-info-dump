@@ -5,6 +5,11 @@ import (
 	"net"
 )
 
+type Query struct {
+	IP net.IP
+	Address string
+}
+
 type InfoResult struct {
 	Info interface{}
 	Err  error
@@ -13,7 +18,7 @@ type InfoResult struct {
 type InfoSource interface {
 	// FetchInfo must close the returned channel if no messages will be sent through the channel.
 	// If not, the system will hang forever.
-	FetchInfo(arg net.IP) <-chan InfoResult
+	FetchInfo(query Query) <-chan InfoResult
 	Name() string
 }
 

@@ -19,34 +19,15 @@ func Test_WhoIs_FetchInfo_mock(t *testing.T) {
 	ok_ip_string := "1.6.6.6"
 	bad_ip := net.IPv4(0, 6, 6, 6)
 	bad_ip_string := "0.6.6.6"
-	horrible_ip := net.IPv4(0, 0, 66, 6)
-	horrible_ip_string := "0.0.66.6"
-
-	lookupStub := gostub.Stub(&reverseAddrLookup, func(ip string) ([]string, error) {
-		if ip == good_ip_string {
-			return []string{"good"}, nil
-		}
-		if ip == ok_ip_string {
-			return []string{"ok"}, nil
-		}
-		if ip == bad_ip_string {
-			return []string{"bad"}, nil
-		}
-		if ip == horrible_ip_string {
-			return nil, base.BadArgument
-		}
-		return []string{"gibberish"}, nil
-	})
-	defer lookupStub.Reset()
 
 	apiStub := gostub.Stub(&baseAPICall, func(addr string, ss ...string) (string, error) {
-		if addr == "good" {
+		if addr == good_ip_string {
 			return "good", nil
 		}
-		if addr == "ok" {
+		if addr == ok_ip_string {
 			return "bad", nil
 		}
-		if addr == "bad" {
+		if addr == bad_ip_string {
 			return "", base.BadArgument
 		}
 		return "gibberish", nil
@@ -73,29 +54,22 @@ func Test_WhoIs_FetchInfo_mock(t *testing.T) {
 	defer parserStub.Reset()
 
 	{
-		good_channel := source.FetchInfo(good_ip)
+		good_channel := source.FetchInfo(base.Query { IP: good_ip, Address: good_ip_string })
 		info, ok := <-good_channel
 		assert.True(t, ok, "channel to be fine")
 		assert.Nil(t, info.Err, "no error to be returned")
 		assert.Equal(t, "good", info.Info.(parser.WhoisInfo).Domain.Domain, "the information to be forwarded")
 	}
 	{
-		ok_channel := source.FetchInfo(ok_ip)
+		ok_channel := source.FetchInfo(base.Query { IP: ok_ip, Address: ok_ip_string })
 		info, ok := <-ok_channel
 		assert.True(t, ok, "channel to be fine")
 		assert.Nil(t, info.Info, "no valid info to be returned")
 		assert.ErrorIs(t, info.Err, base.SourceFailure, "the correct error to be forwarded")
 	}
 	{
-		bad_channel := source.FetchInfo(bad_ip)
+		bad_channel := source.FetchInfo(base.Query { IP: bad_ip, Address: bad_ip_string })
 		info, ok := <-bad_channel
-		assert.True(t, ok, "channel to be fine")
-		assert.Nil(t, info.Info, "no valid info to be returned")
-		assert.ErrorIs(t, info.Err, base.BadArgument, "the correct error to be forwarded")
-	}
-	{
-		horrible_channel := source.FetchInfo(horrible_ip)
-		info, ok := <-horrible_channel
 		assert.True(t, ok, "channel to be fine")
 		assert.Nil(t, info.Info, "no valid info to be returned")
 		assert.ErrorIs(t, info.Err, base.BadArgument, "the correct error to be forwarded")
