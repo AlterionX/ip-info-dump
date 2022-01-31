@@ -28,7 +28,7 @@ func serverErrorResponse() events.APIGatewayProxyResponse {
 	return httpStatusResponse(http.StatusInternalServerError)
 }
 
-func RunIPLookup(ctx context.Context, req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+func runIPLookup(ctx context.Context, req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	log.Printf("Running ip lookup for: %v and %v", ctx, req)
 
 	data, err := infosource.GetInfo(req.QueryStringParameters["q"], infosource.GetAllSources())
@@ -58,5 +58,5 @@ func RunIPLookup(ctx context.Context, req events.APIGatewayProxyRequest) (events
 }
 
 func main() {
-	lambda.Start(RunIPLookup)
+	lambda.Start(runIPLookup)
 }
