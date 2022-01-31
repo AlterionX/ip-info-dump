@@ -8,7 +8,8 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_GeoIP_FetchInfo(t *testing.T) {
+// NOTE This only really tests the happy path. Perhaps we should test the more exotic failures as well?
+func Test_GeoIP_FetchInfo_real(t *testing.T) {
 	source := GeoIP {}
 
 	ips, err := net.LookupIP("example.com")
@@ -29,12 +30,12 @@ func Test_GeoIP_FetchInfo(t *testing.T) {
 	err = result.Err
 
 	assert.Nil(t, err, "no errors")
-	// Can't really say exactly what these values are...
+	// Can't really say exactly what these values are... but they shouldn't be empty.
 	assert.NotEmpty(t, info.Country, "country to not be empty")
 	assert.NotEmpty(t, info.City, "country to not be empty")
 }
 
 func Test_GeoIP_Name(t *testing.T) {
 	source := GeoIP {}
-	assert.Equal(t, source.Name(), "query", "name to match json conventions")
+	assert.Equal(t, source.Name(), "geoip", "name to match json conventions")
 }

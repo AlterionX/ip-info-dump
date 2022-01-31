@@ -21,8 +21,9 @@ type GeoData struct {
 	Longitude float64 `json:"longitude"`
 }
 
+// This is a variable so that it's easier to mock later.
 var baseAPICall = func(ip net.IP) (GeoData, error) {
-	endpoint := fmt.Sprintf("http://ip-api.com/json/%s", ip.String());
+	endpoint := fmt.Sprintf("http://ip-api.com/json/%s", ip.String())
 	request, err := http.NewRequest(http.MethodGet, endpoint, nil)
 	if err != nil {
 		log.Printf("Failed to fetch data (create request) for geoip query %q due to %q.", ip.String(), err.Error())
@@ -53,8 +54,7 @@ var baseAPICall = func(ip net.IP) (GeoData, error) {
 		return GeoData {}, err
 	}
 
-	return GeoData {
-	}, nil
+	return info, nil
 }
 
 func requestGeoIP(ip net.IP) {

@@ -7,6 +7,7 @@ import (
 	"github.com/AlterionX/ip-info-dump/infosource/base"
 	"github.com/AlterionX/ip-info-dump/infosource/query"
 	"github.com/AlterionX/ip-info-dump/infosource/whois"
+	"github.com/AlterionX/ip-info-dump/infosource/geoip"
 )
 
 func GetAllSources() []base.InfoSource {
@@ -14,6 +15,7 @@ func GetAllSources() []base.InfoSource {
 	return []base.InfoSource{
 		query.QueryInfo {},
 		whois.WhoIs{},
+		geoip.GeoIP{},
 	}
 }
 
@@ -92,6 +94,7 @@ func GetInfo(arg string, sources []base.InfoSource) (map[string]interface{}, err
 			// Switching to early termination is simple, though, so if being correctly formed is more important,
 			// it's pretty easy to switch.
 			log.Printf("Attempting to retrieve message from channel of source %q failed due to %q. Ignoring...", name, err.Error())
+			data[name] = "error"
 			continue
 		}
 

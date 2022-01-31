@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_fetchIP(t *testing.T) {
+func Test_resolveQuery(t *testing.T) {
 	{
 		query, err := resolveQuery("::")
 		assert.Nil(t, err, "no error is expected")
@@ -27,7 +27,7 @@ func Test_fetchIP(t *testing.T) {
 
 	{
 		query, err := resolveQuery("thisisnotawebsite")
-		assert.ErrorIs(t, err, base.BadArgument, "the argument is invalide")
+		assert.ErrorIs(t, err, base.BadArgument, "the argument is invalid")
 		assert.Nil(t, query, "no response when argument is invalid")
 	}
 }
