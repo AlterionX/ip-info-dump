@@ -95,6 +95,28 @@ resource "aws_api_gateway_method" "get_ip_info_dump" {
   authorization = "NONE"
 }
 
+resource "aws_api_gateway_deployment" "basic" {
+  rest_api_id = aws_api_gateway_rest_api.gateway.id
+
+  triggers = {
+    redeployment = sha1(jsonencode([
+      aws_api_gateway_resource.ip_info.id,
+      aws_api_gateway_method.get_ip_info_dump.id,
+      aws_api_gateway_integration.ip_info.id,
+    ]))
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+resource "aws_api_gateway_stage" "prod" {
+  deployment_id = aws_api_gateway_deployment.basic.id
+  rest_api_id   = aws_api_gateway_rest_api.gateway.id
+  stage_name    = "production"
+}
+
 # And finally hook up the actual serverless function with the proxy.
 
 resource "aws_lambda_permission" "get_ip_info_dump_auth" {
@@ -107,7 +129,7 @@ resource "aws_lambda_permission" "get_ip_info_dump_auth" {
   source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.gateway.id}/*/${aws_api_gateway_method.get_ip_info_dump.http_method}${aws_api_gateway_resource.ip_info.path}"
 }
 
-resource "aws_api_gateway_integration" "integration" {
+resource "aws_api_gateway_integration" "ip_info" {
   rest_api_id             = aws_api_gateway_rest_api.gateway.id
   resource_id             = aws_api_gateway_resource.ip_info.id
   http_method             = aws_api_gateway_method.get_ip_info_dump.http_method
